@@ -32,7 +32,6 @@ jobs:
           name: Installing PENN TEST TOOLS...
           command: |
              echo "Installing ZAP API via PIP"
-             ruby -v
              java -version
              node -v
       - run:
