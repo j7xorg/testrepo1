@@ -7,7 +7,7 @@ executors:
         - image: circleci/android:api-27-node
 jobs:
   build:
-     executor: executest1
+    executor: executest1
           #    docker:
           # - image: lordj7x/circleci:node-jdk-rub-pip-v1.4
     steps:
