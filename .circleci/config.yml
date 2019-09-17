@@ -1,0 +1,48 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: lordj7x/circleci:node-jdk-rub-pip-v1.4
+    steps:
+      - checkout
+      - setup_remote_docker
+      - run:
+          name: Downloading ZAP test
+          command: wget https://github.com/zaproxy/zaproxy/releases/download/2.4.3/ZAP_2.4.3_Linux.tar.gz
+      - run: tar zxf ZAP_2.4.3_Linux.tar.gz  --no-same-owner
+      - run: ln -s ./ZAP_2.4.3 /opt/zap
+      - run: set -x
+      - run:
+          name: Downloading and setting up ZED init files
+          command: wget -O ./zap.sh https://raw.githubusercontent.com/stelligent/zap/master/packer/roles/zap/files/zap-init.sh
+      - run: chmod +x ./zap.sh
+      - run:
+          name: Starting up... O W A S P  Z A P  P O C
+          command: ./zap.sh start
+      - run:
+          name: Checking O W A S P  Z A P  status...
+          command: ./zap.sh status
+      - run:
+          name: Installing PENN TEST TOOLS...
+          command: |
+             echo "Installing ZAP API via PIP"
+             pip install python-owasp-zap-v2.4
+             pip install behave
+             pip install flask
+      - run:
+          name: Running PENN TEST in 3...2...1...
+          command: |
+             chmod +x zap-scan.py
+             ./zap-scan.py
+      - run:
+          name: Running FAILED TASK...
+          command: echo "this is a running job when somethings failed:"$CIRCLE_BUILD_NUM
+          when: on_fail
+      - run:
+          name: Running SUCCESFULL TASK...
+          command: echo "this is a running job when somethings NOT FAIL:"$CIRCLE_BUILD_NUM
+          when: on_success
+      - run:
+          name: Running  ALWAYS!!
+          command: echo "this is a running job ALWAYS!"$CIRCLE_BUILD_NUM
+          when: always
