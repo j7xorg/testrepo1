@@ -2,7 +2,8 @@ version: 2.1
 executors:
   executest1:
      docker:
-        - image: circleci/ruby:2.5.1-node-browsers
+        - image: circleci/ruby:2.4.2-jessie-node
+          #        - image: circleci/ruby:2.5.1-node-browsers
         - image: circleci/openjdk:8-stretch
         - image: circleci/android:api-27-node
 jobs:
