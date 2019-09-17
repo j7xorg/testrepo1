@@ -7,8 +7,9 @@ executors:
         - image: circleci/android:api-27-node
 jobs:
   build:
-    docker:
-      - image: lordj7x/circleci:node-jdk-rub-pip-v1.4
+     executor: executest1
+          #    docker:
+          # - image: lordj7x/circleci:node-jdk-rub-pip-v1.4
     steps:
       - checkout
       - setup_remote_docker
@@ -33,7 +34,7 @@ jobs:
           command: |
              echo "Installing ZAP API via PIP"
              ruby -v
-             java -v
+             java -version
              node -v
       - run:
           name: Running PENN TEST in 3...2...1...
